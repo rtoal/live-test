@@ -55,6 +55,7 @@ body {
 
 #testlist textarea {
   display: block;
+  overflow: hidden;
   width: 100%;
   resize: none;
   border: 1px solid #bbb;
