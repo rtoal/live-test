@@ -27,6 +27,7 @@ body {
   width: 50%;
   height: 100%;
   border-right: 1px solid #999;
+  overflow-y: scroll;
 }
 
 .program {
@@ -52,12 +53,17 @@ body {
   top: -4px;
 }
 
-.test {
+#testlist textarea {
+  display: block;
+  width: 100%;
+  resize: none;
   border: 1px solid #bbb;
+  border-left: 8px solid green;
   margin: 0;
   padding: 3px;
+  box-sizing: border-box;
 }
 
-.test:not(:first-child) {
+#testlist textarea:not(:first-child) {
   border-top: none;
 }
