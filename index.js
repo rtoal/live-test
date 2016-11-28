@@ -23,8 +23,12 @@
     textArea.setAttribute('placeholder', 'Write test code here. Last expression is the assertion.');
     textArea.addEventListener('input', runTest, false);
     textArea.addEventListener('keydown', e => {
-      if (e.keyCode === 13 && e.shiftKey) addTest();
-    }, false);
+      if (e.keyCode === 13 && e.shiftKey) {
+        addTest();
+        e.preventDefault();
+        return false;
+      }
+    });
     textArea.focus();
   }
 
