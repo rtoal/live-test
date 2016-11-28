@@ -6,18 +6,33 @@
   const addTestButton = document.getElementById("addtest");
   const testList = document.getElementById("testlist");
 
+  function addDeleteableTextArea(container) {
+    let div = document.createElement("div");
+    let textArea = document.createElement("textarea");
+    let closeRegion = document.createElement("span");
+    closeRegion.innerHTML = "&#x274c;";
+    div.appendChild(textArea);
+    div.appendChild(closeRegion);
+    closeRegion.onclick = () => div.remove();
+    container.appendChild(div);
+    return textArea;
+  }
+
   function addTest() {
-    let newTest = document.createElement("textarea");
-    newTest.setAttribute('placeholder', 'Write test code here. Last expression is the assertion.');
-    newTest.addEventListener('input', runTest, false);
-    testList.appendChild(newTest);
+    let textArea = addDeleteableTextArea(testList);
+    textArea.setAttribute('placeholder', 'Write test code here. Last expression is the assertion.');
+    textArea.addEventListener('input', runTest, false);
+    textArea.addEventListener('keydown', e => {
+      if (e.keyCode === 13 && e.shiftKey) addTest();
+    }, false);
+    textArea.focus();
   }
 
   function runTest() {
     this.style.height = 'auto';
-    this.style.height = this.scrollHeight+'px';
+    this.style.height = this.scrollHeight + 'px';
     this.scrollTop = this.scrollHeight;
-    window.scrollTo(window.scrollLeft,(this.scrollTop + this.scrollHeight));
+    window.scrollTo(window.scrollLeft, (this.scrollTop + this.scrollHeight));
     evalTest(this);
   }
 
@@ -31,8 +46,7 @@
   }
 
   function runAllTests() {
-    tests = document.querySelectorAll("#testlist textarea");
-    for (let test of tests) {
+    for (let test of document.querySelectorAll("#testlist textarea")) {
       evalTest(test);
     }
   }

@@ -49,16 +49,29 @@ h1 {
   top: -4px;
 }
 
-#testlist textarea {
+#testlist div {
   display: block;
-  overflow: hidden;
+  margin: 0;
+  padding: 0;
   width: 100%;
+}
+
+#testlist textarea {
+  display: inline-block;
+  overflow: hidden;
+  width: calc(100% - 20px);
   resize: none;
   border: 1px solid #bbb;
   border-left: 8px solid red;
   margin: 0;
   padding: 3px;
   box-sizing: border-box;
+}
+
+#testlist span {
+  display: block;
+  float: right;
+  text-align: right;
 }
 
 #testlist textarea:not(:first-child) {
