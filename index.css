@@ -38,15 +38,24 @@ h1 {
   box-sizing: content-box;
 }
 
-#addtest {
-  float: right;
+.addtest, .deletetest {
+  font-size: 150%;
+  user-select: none;
+  cursor: pointer;
+}
+
+.addtest:hover {
   font-weight: bold;
-  text-align: center;
-  background-color: blue;
-  color: white;
-  padding: 4px 16px;
-  position: relative;
-  top: -4px;
+  background: radial-gradient(circle farthest-corner, lightblue, white 70%);
+}
+
+.deletetest {
+  color: #777;
+  font-size: 130%;
+}
+
+.deletetest:hover {
+  color: black;
 }
 
 #testlist div {

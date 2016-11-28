@@ -3,14 +3,15 @@
   const PASS_COLOR = "green";
   const FAIL_COLOR = "red";
 
-  const addTestButton = document.getElementById("addtest");
+  const addTestButton = document.querySelector(".addtest");
   const testList = document.getElementById("testlist");
 
   function addDeleteableTextArea(container) {
     let div = document.createElement("div");
     let textArea = document.createElement("textarea");
     let closeRegion = document.createElement("span");
-    closeRegion.innerHTML = "&#x274c;";
+    closeRegion.className = "deletetest";
+    closeRegion.innerHTML = "&#x2296;";
     div.appendChild(textArea);
     div.appendChild(closeRegion);
     closeRegion.onclick = () => div.remove();
