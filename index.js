@@ -8,7 +8,7 @@
 
   function addTest() {
     let newTest = document.createElement("textarea");
-    newTest.innerHTML = '// Describe test here';
+    newTest.setAttribute('placeholder', 'Write test code here. Last expression is the assertion.');
     newTest.addEventListener('input', runTest, false);
     testList.appendChild(newTest);
   }
