@@ -8,22 +8,25 @@
   <body>
     <div class="workspace">
       <div class="tests">
+        <h1>Tests <span id="addtest">+</span></h1>
         <div class="container">
-          <h1>Tests <span id="addtest">+</span></h1>
           <div id="testlist">
           </div>
         </div>
       </div>
       <div class="program">
+        <h1>Code</h1>
         <div class="container">
-          <h1>Code</h1>
-          <div class="editor">
-          </div>
+          <div id="editor"></div>
         </div>
       </div>
     </div>
-    <div class="notes">
-    </div>
     <script src="index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.5/ace.js"></script>
+    <script>
+      var editor = ace.edit("editor");
+      editor.setTheme("ace/theme/monokai");
+      editor.getSession().setMode("ace/mode/javascript");
+    </script>
   </body>
 </html>
