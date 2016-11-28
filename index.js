@@ -11,7 +11,6 @@
     newTest.innerHTML = '// Describe test here';
     newTest.addEventListener('input', runTest, false);
     testList.appendChild(newTest);
-    runTest.call(newTest);
   }
 
   function runTest() {
@@ -24,12 +23,21 @@
 
   function evalTest(textarea) {
     try {
-      let pass = eval(textarea.value);
+      let pass = eval(editor.getValue() + ";" + textarea.value);
       textarea.style.borderLeftColor = pass ? PASS_COLOR : FAIL_COLOR;
     } catch (e) {
       textarea.style.borderLeftColor = FAIL_COLOR;
     }
   }
+
+  function runAllTests() {
+    tests = document.querySelectorAll("#testlist textarea");
+    for (let test of tests) {
+      evalTest(test);
+    }
+  }
+
+  editor.getSession().on('change', runAllTests);
 
   addTestButton.onclick = addTest;
   addTest();

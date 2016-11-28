@@ -21,12 +21,13 @@
         </div>
       </div>
     </div>
-    <script src="index.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.5/ace.js"></script>
     <script>
       var editor = ace.edit("editor");
       editor.setTheme("ace/theme/monokai");
       editor.getSession().setMode("ace/mode/javascript");
+      editor.getSession().setTabSize(2);
     </script>
+    <script src="index.js"></script>
   </body>
 </html>
