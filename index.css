@@ -1,43 +1,30 @@
 body {
   margin: 0;
-}
-
-.workspace {
-  margin: 0;
   padding: 0;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 96%;
-  height: 96%;
-  border: 1px solid #333;
   font-family: Arial, Verdana, sans-serif;
 }
 
-.workspace h1 {
+h1 {
   font-size: 18px;
   font-weight: bold;
   padding: 2px 8px;
 }
 
-.tests {
+.tests, .program {
   position: fixed;
   top: 0;
-  left: 0;
   width: 50%;
   height: 100%;
-  border-right: 1px solid #999;
   overflow-y: scroll;
 }
 
+.tests {
+  left: 0;
+  border-right: 1px solid #999;
+}
+
 .program {
-  position: fixed;
-  top: 0;
   left: 50%;
-  width: 50%;
-  height: 100%;
-  overflow-y: scroll;
 }
 
 .container {
