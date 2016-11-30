@@ -27,7 +27,7 @@
   // Adds a new text area for tests. Shift+Enter also creates a new one.
   function addTest() {
     let textArea = addDeleteableTextArea(testContainer, div => div.remove());
-    textArea.setAttribute('placeholder', 'Write test code here. Last expression is the assertion.');
+    textArea.setAttribute('placeholder', 'Write a test here. Last expression is the assertion.');
     textArea.addEventListener('input', () => {sizeBox(textArea); evalTest(textArea);});
     textArea.addEventListener('keydown', e => {
       if (e.keyCode === 13 && e.shiftKey) {
@@ -79,11 +79,17 @@
     runAllTests();
   }
 
+  setupArea.setAttribute('placeholder', 'Add code to be run before every test here.');
   setupArea.addEventListener('input', () => {sizeBox(setupArea); runAllTests();});
   addSetupButton.addEventListener('click', showSetup);
   addTestButton.addEventListener('click', addTest);
   hideSetup();
   addTest();
 
+  let helpModal = document.querySelector(".modal");
+  helpModal.onclick = () => helpModal.style.display = 'none';
+  document.querySelector("#helpbutton").addEventListener('click', () => {
+    helpModal.style.display = 'block';
+  });
   editor.getSession().on('change', runAllTests);
 }());

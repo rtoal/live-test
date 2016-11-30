@@ -8,6 +8,10 @@
   <body>
     <div class="tests">
       <div class="container">
+        <div id="topline">
+          <img src="logo.png">
+          <ul><li id="helpbutton">Help<li id="loadbutton">Load<li id="savebutton">Save<li id="exportbutton">Export<li id="coveragebutton">Coverage</ul>
+        </div>
         <h1>Before</h1>
         <div id="beforewrapper">
           <!-- single text area for setup will go here -->
@@ -23,6 +27,16 @@
     <div class="program">
       <div class="container">
         <div id="editor"></div>
+      </div>
+    </div>
+    <div class="modal">
+      <div class="modal-content">
+        <h1>Practice your TDD</h1>
+        <p>Begin by writing a test. A test is a block of JavaScript ending with an expression, which is the test’s assertion. You’ll see a red bar on the left of the test because it is (or should be) failing. Next, write some code to make the test pass&mdash;to get that green bar.</p>
+        <p>Tests are live (run continuously). Navigate between the test panel and editor with <code>Ctrl+,</code>. Navigate among the tests with <code>Tab</code> and <code>Shift+Tab</code>.
+        <p>Add more tests by clicking the &#x2295; button under the last test or pressing <code>Shift+Enter</code> in a test box.</p>
+        <p>Each test is independent. If you need some code to run before each test (e.g., data structure initialization), enter it in the “Before” box.</p>
+        <p>If the first line of a test is a comment, it will be used in the exported test script as the test’s description.</p>
       </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.5/ace.js"></script>
