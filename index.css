@@ -7,7 +7,12 @@ body {
 h1 {
   font-size: 18px;
   font-weight: bold;
-  padding: 2px 8px;
+  padding: 8px 0 0 0;
+}
+
+h1:first-child {
+  padding-top: 0;
+  margin-top: 0;
 }
 
 .tests, .program {
@@ -32,30 +37,35 @@ h1 {
   padding: 8px;
   position: absolute;
   left: 0;
-  top: 40px;
+  top: 0;
   right: 0;
   bottom: 0;
   box-sizing: content-box;
 }
 
-.addtest, .deletetest {
+.program .container {
+  padding: 0;
+}
+
+.addtest, .addsetup, .deletebutton {
   font-size: 150%;
   user-select: none;
   cursor: pointer;
 }
 
-.addtest:hover {
+.addtest:hover, .addsetup:hover {
   font-weight: bold;
   background: radial-gradient(circle farthest-corner, lightblue, white 70%);
 }
 
-.deletetest {
+.deletebutton {
   color: #777;
   font-size: 130%;
 }
 
-.deletetest:hover {
+.deletebutton:hover {
   color: black;
+  font-weight: bold;
 }
 
 #testlist div {
@@ -65,7 +75,7 @@ h1 {
   width: 100%;
 }
 
-#testlist textarea {
+.tests textarea {
   display: inline-block;
   overflow: hidden;
   width: calc(100% - 20px);
@@ -77,21 +87,20 @@ h1 {
   box-sizing: border-box;
 }
 
-#testlist span {
+.tests textarea+span {
   display: block;
   float: right;
   text-align: right;
 }
 
-#testlist textarea:not(:first-child) {
-  border-top: none;
+#beforewrapper textarea {
+  border-left: 1px solid #bbb;
 }
 
 #editor {
-  border: 1px solid gray;
   position: absolute;
-  left: 8px;
-  top: 8px;
-  right: 8px;
-  bottom: 8px;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
 }

@@ -7,15 +7,20 @@
   </head>
   <body>
     <div class="tests">
-      <h1>Tests</h1>
       <div class="container">
+        <h1>Before</h1>
+        <div id="beforewrapper">
+          <!-- single text area for setup will go here -->
+        </div>
+        <div><span class="addsetup" title="Add setup code">&#x2295;</span></div>
+        <h1>Tests</h1>
         <div id="testlist">
+          <!-- textareas for tests will go here -->
         </div>
         <div><span class="addtest" title="Add new test">&#x2295;</span></div>
       </div>
     </div>
     <div class="program">
-      <h1>Code</h1>
       <div class="container">
         <div id="editor"></div>
       </div>
@@ -26,6 +31,8 @@
       editor.setTheme("ace/theme/monokai");
       editor.getSession().setMode("ace/mode/javascript");
       editor.getSession().setTabSize(2);
+      editor.insert('// Add code to be tested here\n');
+      editor.selectAll();
     </script>
     <script src="index.js"></script>
   </body>
