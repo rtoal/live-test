@@ -68,7 +68,7 @@ h1:first-child {
   font-weight: bold;
 }
 
-#testlist div {
+#testwrapper div {
   display: block;
   margin: 0;
   padding: 0;

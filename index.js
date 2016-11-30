@@ -5,8 +5,9 @@
 
   const addSetupButton = document.querySelector(".addsetup");
   const addTestButton = document.querySelector(".addtest");
-  const testList = document.getElementById("testlist");
-  let setupArea;
+  const testContainer = document.getElementById("testwrapper");
+  const beforeContainer = document.getElementById("beforewrapper");
+  const setupArea = addDeleteableTextArea(beforeContainer, hideSetup);
 
   // Creates a div with a text area and a close button, returns the textarea.
   // You can give a callback to do something after removing the div.
@@ -18,15 +19,14 @@
     closer.innerHTML = "&#x2296;";
     div.appendChild(textArea);
     div.appendChild(closer);
-    closer.addEventListener('click', () => div.remove());
-    if (callback) closer.addEventListener('click', callback);
+    closer.addEventListener('click', () => callback(div));
     container.appendChild(div);
     return textArea;
   }
 
   // Adds a new text area for tests. Shift+Enter also creates a new one.
   function addTest() {
-    let textArea = addDeleteableTextArea(testList);
+    let textArea = addDeleteableTextArea(testContainer, div => div.remove());
     textArea.setAttribute('placeholder', 'Write test code here. Last expression is the assertion.');
     textArea.addEventListener('input', () => {sizeBox(textArea); evalTest(textArea);});
     textArea.addEventListener('keydown', e => {
@@ -46,31 +46,43 @@
     window.scrollTo(window.scrollLeft, (box.scrollTop + box.scrollHeight));
   }
 
-  function evalTest(textarea) {
-    let before = setupArea ? setupArea.value : '';
+  function evalTest(textArea) {
+    let test = textArea.value;
+    if (test.trim() === '') {
+      textArea.style.borderLeftColor = FAIL_COLOR;
+      return;
+    }
     try {
-      let pass = eval(editor.getValue() + "\n;" + before + "\n;" + textarea.value);
-      textarea.style.borderLeftColor = pass ? PASS_COLOR : FAIL_COLOR;
+      let before = beforeContainer.style.display === 'none' ? '' : setupArea.value;
+      let pass = eval(editor.getValue() + "\n;" + before + "\n;" + test);
+      textArea.style.borderLeftColor = pass ? PASS_COLOR : FAIL_COLOR;
     } catch (e) {
-      textarea.style.borderLeftColor = FAIL_COLOR;
+      textArea.style.borderLeftColor = FAIL_COLOR;
     }
   }
 
   function runAllTests() {
-    for (let test of document.querySelectorAll("#testlist textarea")) {
+    for (let test of document.querySelectorAll("#testwrapper textarea")) {
       evalTest(test);
     }
   }
 
-  addSetupButton.onclick = () => {
-    setupArea = addDeleteableTextArea(document.getElementById('beforewrapper'), () => {
-      addSetupButton.style.display = 'inline';
-    });
-    setupArea.addEventListener('input', () => {sizeBox(setupArea); runAllTests();});
-    addSetupButton.style.display = 'none'
-  };
+  function showSetup() {
+    beforeContainer.style.display = 'block';
+    addSetupButton.style.display = 'none';
+    runAllTests();
+  }
 
-  addTestButton.onclick = addTest;
+  function hideSetup() {
+    beforeContainer.style.display = 'none';
+    addSetupButton.style.display = 'inline';
+    runAllTests();
+  }
+
+  setupArea.addEventListener('input', () => {sizeBox(setupArea); runAllTests();});
+  addSetupButton.addEventListener('click', showSetup);
+  addTestButton.addEventListener('click', addTest);
+  hideSetup();
   addTest();
 
   editor.getSession().on('change', runAllTests);
