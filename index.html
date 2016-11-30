@@ -9,7 +9,7 @@
     <div class="tests">
       <div class="container">
         <div id="topline">
-          <svg width="20px" height="20px" viewBox="-10 -10 270 270">
+          <svg width="22px" height="22px" viewBox="-10 -10 270 270">
             <polyline points="50 50, 200 50, 125 175, 50 50" stroke="black" stroke-width="10" fill="none"/>
             <circle cx="50" cy="50" r="60" fill="red"/>
             <circle cx="200" cy="50" r="60" fill="limegreen"/>
@@ -21,12 +21,12 @@
         <div id="beforewrapper">
           <!-- single text area for setup will go here -->
         </div>
-        <div><span class="addsetup" title="Add setup code">&#x2295;</span></div>
+        <div><span class="addsetup">Add setup code</span></div>
         <h1>Tests</h1>
         <div id="testwrapper">
           <!-- textareas for tests will go here -->
         </div>
-        <div><span class="addtest" title="Add new test">&#x2295;</span></div>
+        <div><span class="addtest">Add a new test</span></div>
       </div>
     </div>
     <div class="program">
@@ -39,7 +39,7 @@
         <h1>Practice your TDD</h1>
         <p>Begin by writing a test. A test is a block of JavaScript ending with an expression, which is the test’s assertion. You’ll see a red bar on the left of the test because it is (or should be) failing. Next, write some code to make the test pass&mdash;and get that green bar.</p>
         <p>Tests are live (run continuously). Navigate between the test panel and editor with <code>Ctrl+Enter</code>. Navigate among the tests with <code>Tab</code> and <code>Shift+Tab</code>.
-        <p>Add more tests by clicking the &#x2295; button under the last test or pressing <code>Shift+Enter</code> in a test box.</p>
+        <p>You can add a new test by hitting <code>Shift+Enter</code> in a test box.</p>
         <p>Each test is independent. If you need some code to run before each test (e.g., data structure initialization), enter it in the “Before” box.</p>
         <p>If the first line of a test is a comment, it will be used in the exported test script as the test’s description.</p>
       </div>
@@ -50,7 +50,7 @@
       editor.setTheme("ace/theme/monokai");
       editor.getSession().setMode("ace/mode/javascript");
       editor.getSession().setTabSize(2);
-      editor.insert('// Add code to be tested here\n');
+      editor.insert('// Write a test first\n');
       editor.selectAll();
     </script>
     <script src="index.js"></script>

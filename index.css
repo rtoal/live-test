@@ -72,20 +72,22 @@ h1 {
   padding: 0;
 }
 
-.addtest, .addsetup, .deletebutton {
-  font-size: 150%;
+.addtest, .addsetup {
+  font: italic 70% serif;
+  color: blue;
   user-select: none;
   cursor: pointer;
 }
 
 .addtest:hover, .addsetup:hover {
-  font-weight: bold;
-  background: radial-gradient(circle farthest-corner, lightblue, white 70%);
+  text-decoration: underline;
 }
 
 .deletebutton {
   color: #777;
   font-size: 130%;
+  user-select: none;
+  cursor: pointer;
 }
 
 .deletebutton:hover {
