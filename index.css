@@ -20,9 +20,11 @@ body {
 }
 
 #topline li {
-  display: inline;
-  margin-left: 8px;
+  display: inline-block;
+  margin: 0 0 4px 4px;
   padding: 4px;
+  cursor: pointer;
+  user-select: none;
 }
 
 #helpbutton {background-color: rgb(194,152,251)}

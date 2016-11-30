@@ -35,6 +35,11 @@
         e.preventDefault();
         return false;
       }
+      if (e.keyCode === 13 && e.ctrlKey) {
+        editor.focus();
+        e.preventDefault();
+        return false;
+      }
     });
     textArea.focus();
   }
