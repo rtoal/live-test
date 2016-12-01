@@ -3,8 +3,8 @@
   function $(selector) {return document.querySelector(selector);}
   function $$(selector) {return Array.from(document.querySelectorAll(selector));}
 
-  const PASS_COLOR = "green";
-  const FAIL_COLOR = "red";
+  const PASS_COLOR = "rgb(92,190,93)";
+  const FAIL_COLOR = "rgb(209,70,78)";
 
   const beforeContainer = $("#beforewrapper");
   const setupArea = addDeleteableTextArea(beforeContainer, hideSetup);
@@ -42,6 +42,7 @@
       }
     });
     textArea.focus();
+    return textArea;
   }
 
   function sizeBox(box) {
@@ -82,24 +83,49 @@
     runAllTests();
   }
 
-  function load(key) {
-    let bundle = localStorage.getItem('livetdd-' + key, JSON.stringify(bundle));
-    // TODO - validate item
+  // TODO - needs better error hadling, because so many things can go wrong....
+  function load() {
+    let key = prompt('Enter a local storage key from which to load your work');
+    if (!key) return;
+    let bundle = JSON.parse(localStorage.getItem('livetdd-' + key));
+    if (!(bundle && 'setup' in bundle && 'tests' in bundle && 'code' in bundle)) {
+      alert('Not a valid snapshot');
+      return;
+    }
     editor.setValue(bundle.code);
-    // TODO - add setup
-    // TODO - add tests
+    if (!bundle.setup) {
+      hideSetup();
+    } else {
+      showSetup();
+      setupArea.value = bundle.setup;
+    }
+    $$("#testwrapper div").forEach(div => div.remove());
+    bundle.tests.forEach(test => addTest().value = test);
   }
 
   function save() {
-    console.log('woo')
     let key = prompt('Enter a local storage key at which to save your work');
     if (!key) return;
-    let bundle = {
+    localStorage.setItem(`livetdd-${key}`, JSON.stringify({
       setup: beforeContainer.style.display === 'none' ? null : setupArea.value,
       tests: $$("#testwrapper textarea").map(area => area.value),
       code: editor.getValue()
-    };
-    localStorage.setItem('livetdd-' + key, JSON.stringify(bundle));
+    }));
+    alert(`Saved to local storage at ${key}`);
+  }
+
+  function exportAll() {
+    // TODO
+  }
+
+  function runCoverage() {
+    // TODO
+  }
+
+  function initializeModal(trigger, modal) {
+    trigger.addEventListener('click', () => modal.style.display = 'block');
+    const dismiss = e => {modal.style.display = 'none'; e.preventDefault();};
+    modal.addEventListener('click', dismiss);
   }
 
   setupArea.setAttribute('placeholder', 'Add code to be run before every test here.');
@@ -109,10 +135,10 @@
   hideSetup();
   addTest();
 
-  let helpModal = $(".modal");
-  helpModal.onclick = () => helpModal.style.display = 'none';
-  $("#helpbutton").addEventListener('click', () => {helpModal.style.display = 'block';});
+  initializeModal($("#helpbutton"), $(".modal"));
   $("#loadbutton").addEventListener('click', load);
   $("#savebutton").addEventListener('click', save);
+  $("#exportbutton").addEventListener('click', exportAll);
+  $("#coveragebutton").addEventListener('click', runCoverage);
   editor.getSession().on('change', runAllTests);
 }());

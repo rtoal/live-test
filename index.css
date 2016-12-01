@@ -108,7 +108,7 @@ h1 {
   width: calc(100% - 20px);
   resize: none;
   border: 1px solid #bbb;
-  border-left: 8px solid red;
+  border-left: 8px solid rgb(209,70,78);
   margin: 0;
   padding: 3px;
   box-sizing: border-box;
