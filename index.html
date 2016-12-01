@@ -5,9 +5,11 @@
     <title>Live Test</title>
     <link rel="stylesheet" href="index.css">
   </head>
+
   <body>
     <div class="tests">
       <div class="container">
+
         <div id="topline">
           <svg width="22px" height="22px" viewBox="-10 -10 270 270">
             <polyline points="50 50, 200 50, 125 175, 50 50" stroke="black" stroke-width="10" fill="none"/>
@@ -15,13 +17,21 @@
             <circle cx="200" cy="50" r="60" fill="limegreen"/>
             <circle cx="125" cy="175" r="60" fill="blue"/>
           </svg>
-          <ul><li id="helpbutton">Help<li id="loadbutton">Load<li id="savebutton">Save<li id="exportbutton">Export<li id="coveragebutton">Coverage</ul>
+          <ul>
+            <li id="helpbutton">Help
+            <li id="loadbutton">Load
+            <li id="savebutton">Save
+            <li id="exportbutton">Export
+            <li id="coveragebutton">Coverage
+          </ul>
         </div>
+
         <h1>Before</h1>
         <div id="beforewrapper">
           <!-- single text area for setup will go here -->
         </div>
         <div><span class="addsetup">Add setup code</span></div>
+
         <h1>Tests</h1>
         <div id="testwrapper">
           <!-- textareas for tests will go here -->
@@ -29,21 +39,24 @@
         <div><span class="addtest">Add a new test</span></div>
       </div>
     </div>
+
     <div class="program">
       <div class="container">
         <div id="editor"></div>
       </div>
     </div>
+
     <div class="modal">
       <div class="modal-content">
         <h1>Practice your TDD</h1>
-        <p>Begin by writing a test. A test is a block of JavaScript ending with an expression, which is the test’s assertion. You’ll see a red bar on the left of the test because it is (or should be) failing. Next, write some code to make the test pass&mdash;and get that green bar.</p>
+        <p>Begin by writing a test. A test is a block of JavaScript ending with an expression, which is the test’s assertion. You’ll see a red bar on the left of the test because it is (or should be) failing. Next, write some code to make the test pass and get that green bar.</p>
         <p>Tests are live (run continuously). Navigate between the test panel and editor with <code>Ctrl+Enter</code>. Navigate among the tests with <code>Tab</code> and <code>Shift+Tab</code>.
         <p>You can add a new test by hitting <code>Shift+Enter</code> in a test box.</p>
         <p>Each test is independent. If you need some code to run before each test (e.g., data structure initialization), enter it in the “Before” box.</p>
         <p>If the first line of a test is a comment, it will be used in the exported test script as the test’s description.</p>
       </div>
     </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.5/ace.js"></script>
     <script>
       var editor = ace.edit("editor");
