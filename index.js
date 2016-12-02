@@ -63,7 +63,7 @@
       return;
     }
     let before = beforeContainer.style.display === 'none' ? '' : setupArea.value;
-    textArea.worker.postMessage(editor.getValue() + "\n;" + before + "\n;" + test);
+    textArea.worker.postMessage(`${editor.getValue()}\n;${before}\n;${test}`);
   }
 
   function runAllTests() {
