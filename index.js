@@ -42,6 +42,10 @@
       }
     });
     textArea.focus();
+    textArea.worker = new Worker('testrunner.js');
+    textArea.worker.addEventListener('message', result => {
+      textArea.style.borderLeftColor = result.data ? PASS_COLOR : FAIL_COLOR
+    });
     return textArea;
   }
 
@@ -58,13 +62,8 @@
       textArea.style.borderLeftColor = FAIL_COLOR;
       return;
     }
-    try {
-      let before = beforeContainer.style.display === 'none' ? '' : setupArea.value;
-      let pass = eval(editor.getValue() + "\n;" + before + "\n;" + test);
-      textArea.style.borderLeftColor = pass ? PASS_COLOR : FAIL_COLOR;
-    } catch (e) {
-      textArea.style.borderLeftColor = FAIL_COLOR;
-    }
+    let before = beforeContainer.style.display === 'none' ? '' : setupArea.value;
+    textArea.worker.postMessage(editor.getValue() + "\n;" + before + "\n;" + test);
   }
 
   function runAllTests() {
@@ -101,6 +100,7 @@
     }
     $$("#testwrapper div").forEach(div => div.remove());
     bundle.tests.forEach(test => addTest().value = test);
+    // TODO - looks like we need to size the boxes after loading, who knew.
   }
 
   function save() {
