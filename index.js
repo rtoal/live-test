@@ -82,7 +82,7 @@
     runAllTests();
   }
 
-  // TODO - needs better error hadling, because so many things can go wrong....
+  // TODO - needs better error handling, because so many things can go wrong....
   function load() {
     let key = prompt('Enter a local storage key from which to load your work');
     if (!key) return;
@@ -123,8 +123,14 @@
   }
 
   function initializeModal(trigger, modal) {
-    trigger.addEventListener('click', () => modal.style.display = 'block');
-    const dismiss = e => {modal.style.display = 'none'; e.preventDefault();};
+    const dismiss = e => {
+      modal.style.display = 'none';
+      document.body.removeEventListener('keyup', dismiss);
+    };
+    trigger.addEventListener('click', () => {
+      modal.style.display = 'block';
+      document.body.addEventListener('keyup', dismiss);
+    });
     modal.addEventListener('click', dismiss);
   }
 

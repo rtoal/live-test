@@ -5,11 +5,7 @@ body {
 }
 
 #topline {
-  margin-bottom: 20px;
-}
-
-#appname {
-  font: 28px bold serif;
+  margin-bottom: 10px;
 }
 
 #topline ul {
@@ -21,23 +17,28 @@ body {
 
 #topline li {
   display: inline-block;
-  margin: 0 0 4px 4px;
-  padding: 4px;
+  margin: 0 0 4px 3px;
+  padding: 4px 4px;
   cursor: pointer;
   user-select: none;
+  border: 1px solid white;
 }
 
-#helpbutton {background-color: rgb(194,152,251)}
+#topline li:hover {
+  border: 1px solid black;
+}
+
+#helpbutton {background-color: rgb(200,158,251)}
 #loadbutton {background-color: rgb(120,253,237)}
 #savebutton {background-color: rgb(215,252,129)}
 #exportbutton {background-color: rgb(253,204,132)}
 #coveragebutton {background-color: rgb(255,121,236)}
 
 h1 {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
-  padding: 8px 0 0 0;
-  margin: 0 0 4px 0;
+  padding: 0;
+  margin: 8px 0 4px 0;
 }
 
 .tests, .program {
@@ -50,7 +51,6 @@ h1 {
 
 .tests {
   left: 0;
-  border-right: 1px solid #999;
 }
 
 .program {
