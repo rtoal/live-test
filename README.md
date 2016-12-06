@@ -1,7 +1,9 @@
-# live-test
+# Live Test
 
 A UI experiment.
 
-Not meant for production use; it uses `eval`.
+Begin by entering tests on the left side, using the Chai assertion library.
 
-Nothing to see here at the moment.
+Tests are evaluated on web workers.
+
+This is only a hack. Not meant for production use.

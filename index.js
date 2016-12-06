@@ -30,7 +30,7 @@
   // Adds a new text area for tests. Shift+Enter also creates a new one.
   function addTest() {
     let textArea = addDeleteableTextArea($("#testwrapper"), div => div.remove());
-    textArea.setAttribute('placeholder', 'Write a test here. Last expression is the assertion.');
+    textArea.setAttribute('placeholder', 'Write a test, like chai.assert.equal(2+2, 4)');
     textArea.addEventListener('input', () => {sizeBox(textArea); evalTest(textArea);});
     textArea.addEventListener('keydown', e => {
       if (e.keyCode === 13 && e.shiftKey) {

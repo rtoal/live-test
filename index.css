@@ -6,13 +6,13 @@ body {
 
 #topline {
   margin-bottom: 10px;
+  text-align: right;
 }
 
 #topline ul {
   margin: 0;
   font-size: 11px;
   padding: 0;
-  float: right;
 }
 
 #topline li {
@@ -35,7 +35,7 @@ body {
 #coveragebutton {background-color: rgb(255,121,236)}
 
 h1 {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   padding: 0;
   margin: 8px 0 4px 0;
@@ -93,6 +93,12 @@ h1 {
 .deletebutton:hover {
   color: black;
   font-weight: bold;
+}
+
+.tests {
+  background-image: url('tddhat.png');
+  background-position: bottom right;
+  background-repeat: no-repeat;
 }
 
 #testwrapper div {
