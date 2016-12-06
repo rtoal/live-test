@@ -2,7 +2,7 @@
 
 A UI experiment.
 
-Begin by entering tests on the left side, using the Chai assertion library.
+Begin by entering tests on the left side. Chai is included for your assertions.
 
 Tests are evaluated on web workers.
 
