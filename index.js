@@ -74,6 +74,10 @@
     $$("#testwrapper textarea").forEach(test => evalTest(test));
   }
 
+  function sizeAllBoxes() {
+    $$("#testwrapper textarea").forEach(box => sizeBox(box));
+  }
+
   function showSetup() {
     beforeContainer.style.display = 'block';
     $('.addsetup').style.display = 'none';
@@ -146,7 +150,7 @@
   addTest();
 
   initializeModal($("#helpbutton"), $(".modal"));
-  $("#loadbutton").addEventListener('click', load);
+  $("#loadbutton").addEventListener('click', () => {load(); sizeAllBoxes(); runAllTests();});
   $("#savebutton").addEventListener('click', save);
   $("#exportbutton").addEventListener('click', exportAll);
   $("#coveragebutton").addEventListener('click', runCoverage);
