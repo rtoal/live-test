@@ -19,10 +19,11 @@
     try {
       // Each test begins with the global object untarnished with previous mutations.
       deleteNonProperGlobals();
-      // TODO: Don't just return a boolean; bundle the failure reason if any
-      self.postMessage(!!eval(testCode.data));
+      eval(testCode.data);
+      self.postMessage(true);
     } catch (e) {
-      // TODO: Bundle the exception text with the result
+      // Chai puts its exception messages inside its `d` field.
+      console.log(e.d && e.d.message || e.message || typeof(e))
       self.postMessage(false);
     }
   });
