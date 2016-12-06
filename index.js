@@ -15,10 +15,13 @@
     let div = document.createElement("div");
     let textArea = document.createElement("textarea");
     let closer = document.createElement("span");
+    let reportDiv = document.createElement("div");
     closer.className = "deletebutton";
     closer.innerHTML = "&#x2296;";
+    reportDiv.className = "testoutput";
     div.appendChild(textArea);
     div.appendChild(closer);
+    div.appendChild(reportDiv);
     closer.addEventListener('click', () => callback(div));
     container.appendChild(div);
     return textArea;
@@ -44,7 +47,8 @@
     textArea.focus();
     textArea.worker = new Worker('testrunner.js');
     textArea.worker.addEventListener('message', result => {
-      textArea.style.borderLeftColor = result.data ? PASS_COLOR : FAIL_COLOR
+      textArea.style.borderLeftColor = result.data[0] ? PASS_COLOR : FAIL_COLOR
+      textArea.nextSibling.nextSibling.innerHTML = result.data[1];
     });
     return textArea;
   }

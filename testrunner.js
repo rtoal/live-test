@@ -20,11 +20,10 @@
       // Each test begins with the global object untarnished with previous mutations.
       deleteNonProperGlobals();
       eval(testCode.data);
-      self.postMessage(true);
+      self.postMessage([true, '']);
     } catch (e) {
       // Chai puts its exception messages inside its `d` field.
-      console.log(e.d && e.d.message || e.message || typeof(e))
-      self.postMessage(false);
+      self.postMessage([false, e.d && e.d.message || e.message || typeof(e)]);
     }
   });
 }());
