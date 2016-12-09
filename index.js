@@ -8,9 +8,10 @@
 
   const beforeContainer = $("#beforewrapper");
   const setupArea = addDeleteableTextArea(beforeContainer, hideSetup);
+  const coverageWorker = new Worker('coverageworker.js');
 
-  // Creates a div with a text area and a close button, returns the textarea.
-  // You can give a callback to do something after removing the div.
+  // Creates a div with a text area, a button, and a reporting line;
+  // returns the textarea. Supply a callback for the button.
   function addDeleteableTextArea(container, callback) {
     let div = document.createElement("div");
     let textArea = document.createElement("textarea");
@@ -67,7 +68,7 @@
       return;
     }
     let before = beforeContainer.style.display === 'none' ? '' : setupArea.value;
-    textArea.worker.postMessage(`${editor.getValue()}\n;${before}\n;${test}`);
+    textArea.worker.postMessage(`"use strict";\n${editor.getValue()}\n;${before}\n;${test}`);
   }
 
   function runAllTests() {
@@ -90,7 +91,14 @@
     runAllTests();
   }
 
-  // TODO - needs better error handling, because so many things can go wrong....
+  function serialize() {
+    return {
+      setup: beforeContainer.style.display === 'none' ? null : setupArea.value,
+      tests: $$("#testwrapper textarea").map(area => area.value),
+      code: editor.getValue()
+    }
+  }
+
   function load() {
     let key = prompt('Enter a local storage key from which to load your work');
     if (!key) return;
@@ -108,27 +116,29 @@
     }
     $$("#testwrapper div").forEach(div => div.remove());
     bundle.tests.forEach(test => addTest().value = test);
-    // TODO - looks like we need to size the boxes after loading, who knew.
+    sizeAllBoxes();
+    runAllTests();
   }
 
   function save() {
     let key = prompt('Enter a local storage key at which to save your work');
     if (!key) return;
-    localStorage.setItem(`livetdd-${key}`, JSON.stringify({
-      setup: beforeContainer.style.display === 'none' ? null : setupArea.value,
-      tests: $$("#testwrapper textarea").map(area => area.value),
-      code: editor.getValue()
-    }));
+    localStorage.setItem(`livetdd-${key}`, JSON.stringify(serialize()));
     alert(`Saved to local storage at ${key}`);
   }
 
   function exportAll() {
+    alert('Export is not yet implemented');
     // TODO
   }
 
   function runCoverage() {
-    // TODO
+    coverageWorker.postMessage(serialize());
   }
+
+  coverageWorker.addEventListener('message', message => {
+    console.log(message.data);
+  });
 
   function initializeModal(trigger, modal) {
     const dismiss = e => {
@@ -150,7 +160,7 @@
   addTest();
 
   initializeModal($("#helpbutton"), $(".modal"));
-  $("#loadbutton").addEventListener('click', () => {load(); sizeAllBoxes(); runAllTests();});
+  $("#loadbutton").addEventListener('click', load);
   $("#savebutton").addEventListener('click', save);
   $("#exportbutton").addEventListener('click', exportAll);
   $("#coveragebutton").addEventListener('click', runCoverage);
