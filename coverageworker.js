@@ -37,7 +37,7 @@
     try {
       deleteNonProperGlobals();
       eval(`(function(){${computeCoverage(message.data)}}())`);
-      self.postMessage([true, JSON.stringify(self.__coverage__)]);
+      self.postMessage([true, self.__coverage__]);
     } catch (e) {
       // Chai puts its exception messages inside its `d` field.
       self.postMessage([false, e.d && e.d.message || e.message || typeof(e)]);

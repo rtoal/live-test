@@ -18,7 +18,7 @@
     let closer = document.createElement("span");
     let reportDiv = document.createElement("div");
     closer.className = "deletebutton";
-    closer.innerHTML = "&#x2296;";
+    closer.innerHTML = "&#x2296;"; // Can also try "&#x1f5d1;";
     reportDiv.className = "testoutput";
     div.appendChild(textArea);
     div.appendChild(closer);
@@ -107,7 +107,7 @@
       alert('Not a valid snapshot');
       return;
     }
-    editor.setValue(bundle.code);
+    editor.setValue(bundle.code, -1);
     if (!bundle.setup) {
       hideSetup();
     } else {
@@ -132,12 +132,33 @@
     // TODO
   }
 
+  // TODO This belongs in a class. This file is getting out of hand.
+  let allMarkers = [];
+  function mark(start, end) {
+    let range = new Range(start.line-1, start.column, end.line-1, end.column);
+    allMarkers.push(editor.session.addMarker(range, 'uncovered', 'text'));
+  }
+  function clearAllMarkers() {
+    while (allMarkers.length > 0) editor.session.removeMarker(allMarkers.pop())
+  }
+
   function runCoverage() {
+    clearAllMarkers();
     coverageWorker.postMessage(serialize());
   }
 
+  // TODO - THIS JUST DOES STATEMENT COVERAGE NOW!
   coverageWorker.addEventListener('message', message => {
-    console.log(message.data);
+    let [ok, details] = message.data;
+    if (ok) {
+      let coverage = details[Object.keys(details)];
+      for (let key in coverage.s) {
+        if (coverage.s[key] === 0) {
+          let range = coverage.statementMap[key];
+          mark(range.start, range.end)
+        }
+      }
+    }
   });
 
   function initializeModal(trigger, modal) {
@@ -165,4 +186,11 @@
   $("#exportbutton").addEventListener('click', exportAll);
   $("#coveragebutton").addEventListener('click', runCoverage);
   editor.getSession().on('change', runAllTests);
+
+  // Temporary hack - clear coverage markers on ESC key
+  window.addEventListener('keydown', e => {
+    if (e.keyCode === 27) {
+      clearAllMarkers();
+    }
+  })
 }());

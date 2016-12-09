@@ -54,6 +54,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.5/ace.js"></script>
     <script>
       var editor = ace.edit("editor");
+      var Range = ace.require('ace/range').Range;
       editor.setTheme("ace/theme/monokai");
       editor.getSession().setMode("ace/mode/javascript");
       editor.getSession().setTabSize(2);
