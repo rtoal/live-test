@@ -49,7 +49,9 @@
     textArea.worker = new Worker('testrunner.js');
     textArea.worker.addEventListener('message', result => {
       textArea.style.borderLeftColor = result.data[0] ? PASS_COLOR : FAIL_COLOR
-      textArea.nextSibling.nextSibling.innerHTML = result.data[1];
+      if (textArea.nextSibling.nextSibling) {
+        textArea.nextSibling.nextSibling.innerHTML = result.data[1];
+      }
     });
     return textArea;
   }
