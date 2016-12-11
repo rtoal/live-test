@@ -160,6 +160,12 @@
           mark(range.start, range.end)
         }
       }
+      for (let key in coverage.f) {
+        if (coverage.f[key] === 0) {
+          let range = coverage.fnMap[key].loc;
+          mark(range.start, range.end)
+        }
+      }
     }
   });
 
