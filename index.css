@@ -29,11 +29,11 @@ body {
   border: 1px solid black;
 }
 
-#helpbutton {background-color: rgb(220,171,255)}
-#loadbutton {background-color: rgb(120,253,237)}
-#savebutton {background-color: rgb(206,255,119)}
+#loadbutton {background-color: rgb(220,171,255)}
+#savebutton {background-color: rgb(120,253,237)}
+#duplicatebutton {background-color: rgb(206,255,119)}
 #exportbutton {background-color: rgb(253,204,132)}
-#coveragebutton {background-color: rgb(255,151,246)}
+#helpbutton {background-color: rgb(255,151,246)}
 
 h1 {
   font-size: 14px;

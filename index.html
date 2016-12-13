@@ -17,11 +17,11 @@
             <path d="M 100 100 L 186.6025403784 150 A 100 100 1 0 1 13.3974596216 150 Z" fill="rgb(38,103, 240)"/>
           </svg>
           <ul>
-            <li id="helpbutton">Help
             <li id="loadbutton">Load
             <li id="savebutton">Save
+            <li id="duplicatebutton">Duplicate
             <li id="exportbutton">Export
-            <li id="coveragebutton">Coverage
+            <li id="helpbutton">Help
           </ul>
         </div>
 
@@ -57,6 +57,7 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.5/ace.js"></script>
+    <script src="lodash.custom.min.js"></script>
     <script>
       var editor = ace.edit("editor");
       var Range = ace.require('ace/range').Range;

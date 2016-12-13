@@ -33,6 +33,7 @@
     let textArea = addDeleteableTextArea($("#testwrapper"), div => div.remove());
     textArea.setAttribute('placeholder', 'Write a test, like chai.assert.equal(2+2, 4)');
     textArea.addEventListener('input', () => {sizeBox(textArea); evalTest(textArea);});
+    textArea.addEventListener('input', debouncedCoverage);
     textArea.addEventListener('keydown', e => {
       if (e.keyCode === 13 && e.shiftKey) {
         addTest();
@@ -148,8 +149,9 @@
     clearAllMarkers();
     coverageWorker.postMessage(serialize());
   }
+  const debouncedCoverage = _.debounce(runCoverage, 500);
 
-  // TODO - THIS JUST DOES STATEMENT COVERAGE NOW!
+  // Statement and function coverage
   coverageWorker.addEventListener('message', message => {
     let [ok, details] = message.data;
     if (ok) {
@@ -191,9 +193,10 @@
   initializeModal($("#helpbutton"), $(".modal"));
   $("#loadbutton").addEventListener('click', load);
   $("#savebutton").addEventListener('click', save);
+  $("#duplicatebutton").addEventListener('click', () => {alert("Not implemented");});
   $("#exportbutton").addEventListener('click', exportAll);
-  $("#coveragebutton").addEventListener('click', runCoverage);
   editor.getSession().on('change', runAllTests);
+  editor.getSession().on('change', debouncedCoverage);
 
   // Temporary hack - clear coverage markers on ESC key
   window.addEventListener('keydown', e => {
