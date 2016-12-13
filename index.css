@@ -149,7 +149,7 @@ h1 {
 
 .uncovered {
   position: absolute;
-  background: rgba(200, 0, 0, 0.5);
+  background: hsla(57, 100%, 78%, 0.7);
   z-index: 40
 }
 
