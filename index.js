@@ -151,7 +151,9 @@
   }
   const debouncedCoverage = _.debounce(runCoverage, 500);
 
-  // Statement and function coverage
+  // The coverage worker return a pair [ok, message]. If ok, we highlight the
+  // uncovered regions of code. Right now we have only satement coverage and
+  // function coverage.
   coverageWorker.addEventListener('message', message => {
     let [ok, details] = message.data;
     if (ok) {
