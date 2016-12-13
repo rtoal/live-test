@@ -6,10 +6,11 @@ body {
 
 #topline {
   margin-bottom: 10px;
-  text-align: right;
 }
 
 #topline ul {
+  text-align: right;
+  float: right;
   margin: 0;
   font-size: 11px;
   padding: 0;
@@ -28,11 +29,11 @@ body {
   border: 1px solid black;
 }
 
-#helpbutton {background-color: rgb(200,158,251)}
+#helpbutton {background-color: rgb(220,171,255)}
 #loadbutton {background-color: rgb(120,253,237)}
-#savebutton {background-color: rgb(215,252,129)}
+#savebutton {background-color: rgb(206,255,119)}
 #exportbutton {background-color: rgb(253,204,132)}
-#coveragebutton {background-color: rgb(255,121,236)}
+#coveragebutton {background-color: rgb(255,151,246)}
 
 h1 {
   font-size: 14px;
