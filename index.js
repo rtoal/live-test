@@ -197,11 +197,4 @@
   $("#exportbutton").addEventListener('click', exportAll);
   editor.getSession().on('change', runAllTests);
   editor.getSession().on('change', debouncedCoverage);
-
-  // Temporary hack - clear coverage markers on ESC key
-  window.addEventListener('keydown', e => {
-    if (e.keyCode === 27) {
-      clearAllMarkers();
-    }
-  })
 }());
