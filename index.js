@@ -9,6 +9,7 @@
   const beforeContainer = $("#beforewrapper");
   const setupArea = addDeleteableTextArea(beforeContainer, hideSetup);
   const coverageWorker = new Worker('coverageworker.js');
+  let localStorageName;
 
   // Creates a div with a text area, a button, and a reporting line;
   // returns the textarea. Supply a callback for the button.
@@ -105,6 +106,7 @@
   function load() {
     let key = prompt('Enter a local storage key from which to load your work');
     if (!key) return;
+    localStorageName = key;
     let bundle = JSON.parse(localStorage.getItem('livetdd-' + key));
     if (!(bundle && 'setup' in bundle && 'tests' in bundle && 'code' in bundle)) {
       alert('Not a valid snapshot');
@@ -124,15 +126,30 @@
   }
 
   function save() {
+    if (!localStorageName) {
+      saveAs();
+      return;
+    }
+    localStorage.setItem(`livetdd-${localStorageName}`, JSON.stringify(serialize()));
+    flash(`Saved to local storage at ${localStorageName}`);
+  }
+
+  function saveAs() {
     let key = prompt('Enter a local storage key at which to save your work');
     if (!key) return;
-    localStorage.setItem(`livetdd-${key}`, JSON.stringify(serialize()));
-    alert(`Saved to local storage at ${key}`);
+    localStorageName = key;
+    save();
   }
 
   function exportAll() {
     alert('Export is not yet implemented');
     // TODO
+  }
+
+  function flash(message) {
+    $('#flash').innerHTML = message;
+    $('#flash').style.right = '0';
+    setTimeout(() => $('#flash').style.right = '-320px', 2000);
   }
 
   // TODO This belongs in a class. This file is getting out of hand.
@@ -195,7 +212,7 @@
   initializeModal($("#helpbutton"), $(".modal"));
   $("#loadbutton").addEventListener('click', load);
   $("#savebutton").addEventListener('click', save);
-  $("#duplicatebutton").addEventListener('click', () => {alert("Not implemented");});
+  $("#saveasbutton").addEventListener('click', saveAs);
   $("#exportbutton").addEventListener('click', exportAll);
   editor.getSession().on('change', runAllTests);
   editor.getSession().on('change', debouncedCoverage);

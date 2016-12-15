@@ -31,7 +31,7 @@ body {
 
 #loadbutton {background-color: rgb(220,171,255)}
 #savebutton {background-color: rgb(120,253,237)}
-#duplicatebutton {background-color: rgb(206,255,119)}
+#saveasbutton {background-color: rgb(206,255,119)}
 #exportbutton {background-color: rgb(253,204,132)}
 #helpbutton {background-color: rgb(255,151,246)}
 
@@ -149,8 +149,21 @@ h1 {
 
 .uncovered {
   position: absolute;
-  background: hsla(57, 100%, 78%, 0.7);
+  background: hsla(57, 50%, 28%, 1);
   z-index: 40
+}
+
+#flash {
+  position: absolute;
+  height: 50px;
+  width: 300px;
+  right: -320px;
+  padding: 8px;
+  z-index: 100;
+  transition: right 0.5s ease-in-out;
+  background: yellow;
+  border-bottom-left-radius: 10px;
+  top: 0;
 }
 
 .modal {
