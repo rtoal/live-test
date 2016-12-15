@@ -10,6 +10,12 @@
   // from the imported scripts, which we need).
   let properGlobals = new Set(Object.keys(self));
 
+  let console = {
+    log() {},
+    error() {},
+    info() {},
+  };
+
   // Removes all globals that were user-added, so the worker can be reused.
   function deleteNonProperGlobals() {
     for (let key of Object.keys(self)) {
