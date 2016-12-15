@@ -172,20 +172,20 @@
   // uncovered regions of code. Right now we have only satement coverage and
   // function coverage.
   coverageWorker.addEventListener('message', message => {
-    let [ok, details] = message.data;
-    if (ok) {
-      let coverage = details[Object.keys(details)];
-      for (let key in coverage.s) {
-        if (coverage.s[key] === 0) {
-          let range = coverage.statementMap[key];
-          mark(range.start, range.end)
-        }
+    if (!message.data) {
+      return;
+    }
+    let coverage = message.data[Object.keys(message.data)];
+    for (let key in coverage.s) {
+      if (coverage.s[key] === 0) {
+        let range = coverage.statementMap[key];
+        mark(range.start, range.end)
       }
-      for (let key in coverage.f) {
-        if (coverage.f[key] === 0) {
-          let range = coverage.fnMap[key].loc;
-          mark(range.start, range.end)
-        }
+    }
+    for (let key in coverage.f) {
+      if (coverage.f[key] === 0) {
+        let range = coverage.fnMap[key].loc;
+        mark(range.start, range.end)
       }
     }
   });

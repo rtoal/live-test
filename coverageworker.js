@@ -39,18 +39,21 @@
     return code.join(';\n');
   }
 
+  // Receive a message of the form {code:, setup:, tests:}, then compute the coverage.
+  // Sends back the coverage object or undefined. If a syntax error occurs, we send
+  // back undefined immediately. For all other errors, we send back the coverage
+  // object anyway.
   self.addEventListener('message', message => {
     try {
       deleteNonProperGlobals();
       eval(`(function(){${computeCoverage(message.data)}}())`);
-      self.postMessage([true, self.__coverage__]);
+      self.postMessage(self.__coverage__);
     } catch (e) {
-      // Chai puts its exception messages inside its `d` field.
       if (e.name === 'SyntaxError') {
-        self.postMessage([false, e.d && e.d.message || e.message || typeof(e)]);
+        self.postMessage(false);
         return;
       }
-      self.postMessage([true, self.__coverage__]);
+      self.postMessage(self.__coverage__);
     }
   });
 }());
