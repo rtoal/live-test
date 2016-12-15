@@ -6,9 +6,9 @@
   importScripts('lib/escodegen.browser.js');
   importScripts('lib/instrumenter.js');
 
-  // When the worker begins, record the set of global variables (including those
-  // from the imported scripts, which we need). That way we can get rid of any globals
-  // created by the code we are running between runs.
+  // When the worker begins, record the set of global variables (including those from
+  // imported scripts, which we need). That way we can get rid of any globals created
+  // by the code we are executing between runs.
   let properGlobals = new Set(Object.keys(self));
 
   // Disable console logging while running coverage.
@@ -18,7 +18,7 @@
     info() {},
   };
 
-  // Removes all globals that were user-added, so the worker can be reused.
+  // Remove all globals that were user-added, so the worker can be reused.
   function deleteNonProperGlobals() {
     for (let key of Object.keys(self)) {
       if (!(properGlobals.has(key))) {

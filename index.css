@@ -132,6 +132,12 @@ h1 {
 .tests #testwrapper .testoutput {
   margin: 0;
   font-size: 8pt;
+  color: #654321;
+}
+
+.tests #testwrapper .testerror {
+  margin: 0;
+  font-size: 8pt;
   color: red;
 }
 

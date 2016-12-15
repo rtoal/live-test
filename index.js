@@ -17,12 +17,15 @@
     let div = document.createElement("div");
     let textArea = document.createElement("textarea");
     let closer = document.createElement("span");
+    let errorDiv = document.createElement("div");
     let reportDiv = document.createElement("div");
     closer.className = "deletebutton";
     closer.innerHTML = "&#x2296;"; // Can also try "&#x1f5d1;";
+    errorDiv.className = "testerror";
     reportDiv.className = "testoutput";
     div.appendChild(textArea);
     div.appendChild(closer);
+    div.appendChild(errorDiv);
     div.appendChild(reportDiv);
     closer.addEventListener('click', () => callback(div));
     container.appendChild(div);
@@ -50,9 +53,13 @@
     textArea.focus();
     textArea.worker = new Worker('testrunner.js');
     textArea.worker.addEventListener('message', result => {
-      textArea.style.borderLeftColor = result.data[0] ? PASS_COLOR : FAIL_COLOR
+      let [success, output, errorMessage] = result.data;
+      textArea.style.borderLeftColor = success ? PASS_COLOR : FAIL_COLOR;
       if (textArea.nextSibling.nextSibling) {
-        textArea.nextSibling.nextSibling.innerHTML = result.data[1];
+        textArea.nextSibling.nextSibling.innerHTML = errorMessage;
+        if (textArea.nextSibling.nextSibling.nextSibling) {
+          textArea.nextSibling.nextSibling.nextSibling.innerHTML = output.join('<br>');
+        }
       }
     });
     return textArea;
