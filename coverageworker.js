@@ -7,9 +7,11 @@
   importScripts('lib/instrumenter.js');
 
   // When the worker begins, record the set of global variables (including those
-  // from the imported scripts, which we need).
+  // from the imported scripts, which we need). That way we can get rid of any globals
+  // created by the code we are running between runs.
   let properGlobals = new Set(Object.keys(self));
 
+  // Disable console logging while running coverage.
   let console = {
     log() {},
     error() {},
@@ -25,7 +27,7 @@
     }
   }
 
-  // Instanbul will store the coverage object in self.__coverage__.
+  // Instanbul will store the coverage object in self.__coverage__, so nothing to return.
   function computeCoverage(bundle) {
     let instrumenter = new Instrumenter();
     let code = [instrumenter.instrumentSync(bundle.code)];
@@ -40,20 +42,19 @@
   }
 
   // Receive a message of the form {code:, setup:, tests:}, then compute the coverage.
-  // Sends back the coverage object or undefined. If a syntax error occurs, we send
-  // back undefined immediately. For all other errors, we send back the coverage
-  // object anyway.
+  // Send back the coverage object or a falsy value. If a syntax error occurs, send
+  // back false immediately. For all other errors, send back the coverage object,
+  // because we still want to see the coverage when there are runtime errors.
   self.addEventListener('message', message => {
+    deleteNonProperGlobals();
     try {
-      deleteNonProperGlobals();
       eval(`(function(){${computeCoverage(message.data)}}())`);
-      self.postMessage(self.__coverage__);
     } catch (e) {
       if (e.name === 'SyntaxError') {
         self.postMessage(false);
         return;
       }
-      self.postMessage(self.__coverage__);
     }
+    self.postMessage(self.__coverage__);
   });
 }());
