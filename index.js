@@ -5,6 +5,7 @@
 
   const PASS_COLOR = "rgb(92,190,93)";
   const FAIL_COLOR = "rgb(209,70,78)";
+  const SLOW_THRESHHOLD = 3000;
 
   const beforeContainer = $("#beforewrapper");
   const setupArea = addDeleteableTextArea(beforeContainer, hideSetup);
@@ -53,6 +54,8 @@
     textArea.focus();
     textArea.worker = new Worker('testrunner.js');
     textArea.worker.addEventListener('message', result => {
+      textArea.pendingCalls--;
+      textArea.lastReceipt = new Date();
       let [success, output, errorMessage] = result.data;
       textArea.style.borderLeftColor = success ? PASS_COLOR : FAIL_COLOR;
       if (textArea.nextSibling.nextSibling) {
@@ -62,6 +65,7 @@
         }
       }
     });
+    textArea.pendingCalls = 0;
     return textArea;
   }
 
@@ -79,6 +83,8 @@
       return;
     }
     let before = beforeContainer.style.display === 'none' ? '' : setupArea.value;
+    textArea.pendingCalls++;
+    textArea.lastCall = new Date();
     textArea.worker.postMessage(`"use strict";\n${editor.getValue()}\n;${before}\n;${test}`);
   }
 
@@ -197,6 +203,21 @@
     }
   });
 
+  function monitorTests() {
+    $$("#testwrapper textarea").forEach(test => {
+      let now = new Date();
+      if (!test.dead && test.pendingCalls > 0 && now-test.lastCall > SLOW_THRESHHOLD) {
+        test.dead = true;
+        test.style.background = 'red';
+        test.worker.terminate();
+        test.nextSibling.nextSibling.innerHTML = 'Test is too slow, so I killed it';
+        console.log(`Probably dead ${test.pendingCalls}`);
+      }
+    });
+    console.log('tick')
+    setTimeout(monitorTests, 3000);
+  }
+
   function initializeModal(trigger, modal) {
     const dismiss = e => {
       modal.style.display = 'none';
@@ -226,4 +247,5 @@
   addListeners();
   hideSetup();
   addTest();
+  monitorTests();
 }());
