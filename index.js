@@ -209,18 +209,21 @@
     modal.addEventListener('click', dismiss);
   }
 
-  setupArea.setAttribute('placeholder', 'Add code to be run before every test here.');
-  setupArea.addEventListener('input', () => {sizeBox(setupArea); runAllTests();});
-  $('.addsetup').addEventListener('click', showSetup);
-  $('.addtest').addEventListener('click', addTest);
+  function addListeners() {
+    setupArea.setAttribute('placeholder', 'Add code to be run before every test here.');
+    setupArea.addEventListener('input', () => {sizeBox(setupArea); runAllTests();});
+    $('.addsetup').addEventListener('click', showSetup);
+    $('.addtest').addEventListener('click', addTest);
+    initializeModal($("#helpbutton"), $(".modal"));
+    $("#loadbutton").addEventListener('click', load);
+    $("#savebutton").addEventListener('click', save);
+    $("#saveasbutton").addEventListener('click', saveAs);
+    $("#exportbutton").addEventListener('click', exportAll);
+    editor.getSession().on('change', runAllTests);
+    editor.getSession().on('change', debouncedCoverage);
+  }
+
+  addListeners();
   hideSetup();
   addTest();
-
-  initializeModal($("#helpbutton"), $(".modal"));
-  $("#loadbutton").addEventListener('click', load);
-  $("#savebutton").addEventListener('click', save);
-  $("#saveasbutton").addEventListener('click', saveAs);
-  $("#exportbutton").addEventListener('click', exportAll);
-  editor.getSession().on('change', runAllTests);
-  editor.getSession().on('change', debouncedCoverage);
 }());
