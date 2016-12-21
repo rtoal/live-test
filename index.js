@@ -214,7 +214,6 @@
         console.log(`Probably dead ${test.pendingCalls}`);
       }
     });
-    console.log('tick')
     setTimeout(monitorTests, 3000);
   }
 

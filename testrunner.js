@@ -11,7 +11,7 @@
   // Hide the global console object behind a local console that captures output.
   let consoleOutput = [];
   let console = {
-    log(line) {consoleOutput.push(line);}
+    log(line) {consoleOutput.push('ℹ️ ' + line);}
   }
 
   // Remove all globals that were user-added, so the worker can be reused.
@@ -38,7 +38,7 @@
     } catch (e) {
       // Chai puts its exception messages inside its `d` field.
       let errorMessage = e.d && e.d.message || e.message || typeof(e);
-      self.postMessage([false, consoleOutput, errorMessage]);
+      self.postMessage([false, consoleOutput, '⛔️ ' + errorMessage]);
     }
   });
 }());
