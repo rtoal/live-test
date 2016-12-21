@@ -105,7 +105,7 @@ h1 {
 #testwrapper div {
   display: block;
   font-size: 0;
-  margin: 0;
+  margin: 0 0 7px 0;
   padding: 0;
   width: 100%;
 }
@@ -117,8 +117,8 @@ h1 {
   resize: none;
   border: 1px solid #bbb;
   border-left: 8px solid rgb(209,70,78);
-  margin: 0;
-  padding: 3px;
+  margin: 0 0 2px 0;
+  padding: 2px;
   box-sizing: border-box;
 }
 
@@ -129,15 +129,17 @@ h1 {
   font-size: 18px;
 }
 
-.tests #testwrapper .testoutput {
+.tests #testwrapper .testoutput, .tests #testwrapper .testerror {
   margin: 0;
   font-size: 8pt;
+  line-height: 105%;
+}
+
+.tests #testwrapper .testoutput {
   color: #654321;
 }
 
 .tests #testwrapper .testerror {
-  margin: 0;
-  font-size: 8pt;
   color: red;
 }
 
