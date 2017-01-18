@@ -5,16 +5,16 @@
 
   const PASS_COLOR = "rgb(92,190,93)";
   const FAIL_COLOR = "rgb(209,70,78)";
-  const SLOW_THRESHHOLD = 3000;
+  const SLOW_TEST_THRESHOLD = 3000;
 
   const beforeContainer = $("#beforewrapper");
-  const setupArea = addDeleteableTextArea(beforeContainer, hideSetup);
+  const setupArea = addTextArea(beforeContainer, hideSetup);
   const coverageWorker = new Worker('coverageworker.js');
-  let localStorageName;
+  let localStorageName = 'default';
 
   // Creates a div with a text area, a button, and a reporting line;
   // returns the textarea. Supply a callback for the button.
-  function addDeleteableTextArea(container, callback) {
+  function addTextArea(container, callback) {
     let div = document.createElement("div");
     let textArea = document.createElement("textarea");
     let closer = document.createElement("span");
@@ -35,7 +35,7 @@
 
   // Adds a new text area for tests. Shift+Enter also creates a new one.
   function addTest() {
-    let textArea = addDeleteableTextArea($("#testwrapper"), div => div.remove());
+    let textArea = addTextArea($("#testwrapper"), div => div.remove());
     textArea.setAttribute('placeholder', 'Write a test, like chai.assert.equal(2+2, 4)');
     textArea.addEventListener('input', () => {sizeBox(textArea); evalTest(textArea);});
     textArea.addEventListener('input', debouncedCoverage);
@@ -206,7 +206,7 @@
   function monitorTests() {
     $$("#testwrapper textarea").forEach(test => {
       let now = new Date();
-      if (!test.dead && test.pendingCalls > 0 && now-test.lastCall > SLOW_THRESHHOLD) {
+      if (!test.dead && test.pendingCalls > 0 && now-test.lastCall > SLOW_TEST_THRESHOLD) {
         test.dead = true;
         test.style.background = 'red';
         test.worker.terminate();
