@@ -232,6 +232,7 @@
   function addListeners() {
     setupArea.setAttribute('placeholder', 'Add code to be run before every test here.');
     setupArea.addEventListener('input', () => {sizeBox(setupArea); runAllTests();});
+    setupArea.value = 'let eq = chai.assert.equal;\nlet ok = chai.assert.ok;';
     $('.addsetup').addEventListener('click', showSetup);
     $('.addtest').addEventListener('click', addTest);
     initializeModal($("#helpbutton"), $(".modal"));
@@ -244,7 +245,7 @@
   }
 
   addListeners();
-  hideSetup();
+  showSetup();
   addTest();
   monitorTests();
 }());
