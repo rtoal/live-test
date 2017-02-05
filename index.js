@@ -29,6 +29,13 @@
     div.appendChild(errorDiv);
     div.appendChild(reportDiv);
     closer.addEventListener('click', () => callback(div));
+    textArea.addEventListener('keydown', e => {
+      if (e.keyCode === 8 && e.shiftKey) {
+        callback(div);
+        e.preventDefault();
+        return false;
+      }
+    });
     container.appendChild(div);
     return textArea;
   }
