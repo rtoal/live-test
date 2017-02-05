@@ -39,18 +39,6 @@
     textArea.setAttribute('placeholder', 'Write a test, like chai.assert.equal(2+2, 4)');
     textArea.addEventListener('input', () => {sizeBox(textArea); evalTest(textArea);});
     textArea.addEventListener('input', debouncedCoverage);
-    textArea.addEventListener('keydown', e => {
-      if (e.keyCode === 13 && e.shiftKey) {
-        addTest();
-        e.preventDefault();
-        return false;
-      }
-      if (e.keyCode === 13 && e.ctrlKey) {
-        editor.focus();
-        e.preventDefault();
-        return false;
-      }
-    });
     textArea.focus();
     textArea.worker = new Worker('testrunner.js');
     textArea.worker.addEventListener('message', result => {
@@ -240,6 +228,18 @@
     $("#savebutton").addEventListener('click', save);
     $("#saveasbutton").addEventListener('click', saveAs);
     $("#exportbutton").addEventListener('click', exportAll);
+    document.body.addEventListener('keydown', e => {
+      if (e.keyCode === 13 && e.shiftKey) {
+        addTest();
+        e.preventDefault();
+        return false;
+      }
+      if (e.keyCode === 13 && e.ctrlKey) {
+        editor.focus();
+        e.preventDefault();
+        return false;
+      }
+    });
     editor.getSession().on('change', runAllTests);
     editor.getSession().on('change', debouncedCoverage);
   }
