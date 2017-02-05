@@ -156,7 +156,7 @@ h1 {
 
 .uncovered {
   position: absolute;
-  border-bottom: 2px dotted lightblue;
+  border-bottom: 2px dotted blue;
   z-index: 40
 }
 
