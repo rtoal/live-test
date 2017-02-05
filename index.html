@@ -11,11 +11,6 @@
       <div class="container">
 
         <div id="topline">
-          <svg width="22px" height="22px" viewBox="0 0 200 200">
-            <path d="M 100 100 L 13.3974596216 150 A 100 100 1 0 1 100 0 Z" fill="rgb(251,76,77)"/>
-            <path d="M 100 100 L 100 0 A 100 100 1 0 1 186.6025403784 150 Z" fill="rgb(100,202,46)"/>
-            <path d="M 100 100 L 186.6025403784 150 A 100 100 1 0 1 13.3974596216 150 Z" fill="rgb(38,103,240)"/>
-          </svg>
           <ul>
             <li id="loadbutton">Load
             <li id="savebutton">Save
@@ -47,7 +42,7 @@
 
     <div class="modal">
       <div class="modal-content">
-        <h1>Practice TDD</h1>
+        <h1>Live Unit Test Playground</h1>
         <p>Begin by writing a test, using <a href="http://chaijs.com/" target="_blank">Chai</a> for assertions. You’ll see a red bar on the left of the test because it is (or should be) failing. Next, write some code to make the test pass and get a green bar.</p>
         <p>Tests and coverage are live (run continuously). Navigate between the test panel and editor with <code>Ctrl+Enter</code>. Navigate among the tests with <code>Tab</code> and <code>Shift+Tab</code>.
         <p>You can add a new test by hitting <code>Shift+Enter</code>.</p>
@@ -67,8 +62,6 @@
       editor.$blockScrolling = Infinity;
       editor.getSession().setMode("ace/mode/javascript");
       editor.getSession().setTabSize(2);
-      editor.insert('// Write your tests first');
-      editor.selectAll();
     </script>
     <script src="index.js"></script>
   </body>
