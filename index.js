@@ -10,7 +10,7 @@
   const beforeContainer = $("#beforewrapper");
   const setupArea = addTextArea(beforeContainer, hideSetup);
   const coverageWorker = new Worker('coverageworker.js');
-  let localStorageName = 'default';
+  let localStorageName = '';
 
   // Creates a div with a text area, a button, and a reporting line;
   // returns the textarea. Supply a callback for the button.
