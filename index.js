@@ -8,7 +8,7 @@
   const SLOW_TEST_THRESHOLD = 3000;
 
   const beforeContainer = $("#beforewrapper");
-  const setupArea = addTextArea(beforeContainer, hideSetup);
+  const setupArea = addTextArea(beforeContainer);
   const coverageWorker = new Worker('coverageworker.js');
   let localStorageName = '';
   let lastFocusedTest = undefined;
@@ -19,25 +19,27 @@
   function addTextArea(container, callback) {
     let div = document.createElement("div");
     let textArea = document.createElement("textarea");
-    let closer = document.createElement("span");
     let errorDiv = document.createElement("div");
     let reportDiv = document.createElement("div");
-    closer.className = "deletebutton";
-    closer.innerHTML = "&#x2296;"; // Can also try "&#x1f5d1;";
     errorDiv.className = "testerror";
     reportDiv.className = "testoutput";
     div.appendChild(textArea);
-    div.appendChild(closer);
+    if (callback) {
+      let closer = document.createElement("span");
+      closer.className = "deletebutton";
+      closer.innerHTML = "&#x2296;"; // Can also try "&#x1f5d1;";
+      closer.addEventListener('click', () => callback(div));
+      textArea.addEventListener('keydown', e => {
+        if (e.keyCode === 8 && e.shiftKey) {
+          callback(div);
+          e.preventDefault();
+          return false;
+        }
+      });
+      div.appendChild(closer);
+    }
     div.appendChild(errorDiv);
     div.appendChild(reportDiv);
-    closer.addEventListener('click', () => callback(div));
-    textArea.addEventListener('keydown', e => {
-      if (e.keyCode === 8 && e.shiftKey) {
-        callback(div);
-        e.preventDefault();
-        return false;
-      }
-    });
     textArea.addEventListener('focus', e => { lastFocusedTest = textArea; });
     container.appendChild(div);
     return textArea;
@@ -76,6 +78,16 @@
     div.remove();
   }
 
+  // We don't want a bunch of blank tests, so only add one if the last test is not empty
+  function addTestOrFocusLastTestIfEmpty() {
+    const lastTest = $('#testwrapper').lastChild;
+    if (lastTest && lastTest.firstChild && lastTest.firstChild.value.trim().length === 0) {
+      lastTest.firstChild.focus();
+    } else {
+      addTest();
+    }
+  }
+
   function sizeBox(box) {
     box.style.height = 'auto';
     box.style.height = box.scrollHeight + 'px';
@@ -100,19 +112,8 @@
   }
 
   function sizeAllBoxes() {
+    sizeBox(setupArea);
     $$("#testwrapper textarea").forEach(box => sizeBox(box));
-  }
-
-  function showSetup() {
-    beforeContainer.style.display = 'block';
-    $('.addsetup').style.display = 'none';
-    runAllTests();
-  }
-
-  function hideSetup() {
-    beforeContainer.style.display = 'none';
-    $('.addsetup').style.display = 'inline';
-    runAllTests();
   }
 
   function serialize() {
@@ -133,10 +134,7 @@
       return;
     }
     editor.setValue(bundle.code, -1);
-    if (!bundle.setup) {
-      hideSetup();
-    } else {
-      showSetup();
+    if (bundle.setup) {
       setupArea.value = bundle.setup;
     }
     $$("#testwrapper div").forEach(div => div.remove());
@@ -239,8 +237,7 @@
     setupArea.setAttribute('placeholder', 'Add code to be run before every test here.');
     setupArea.addEventListener('input', () => {sizeBox(setupArea); runAllTests();});
     setupArea.value = 'let eq = chai.assert.equal;\nlet ok = chai.assert.ok;';
-    $('.addsetup').addEventListener('click', showSetup);
-    $('.addtest').addEventListener('click', addTest);
+    $('.addtest').addEventListener('click', addTestOrFocusLastTestIfEmpty);
     initializeModal($("#helpbutton"), $(".modal"));
     $("#loadbutton").addEventListener('click', load);
     $("#savebutton").addEventListener('click', save);
@@ -248,7 +245,7 @@
     $("#exportbutton").addEventListener('click', exportAll);
     document.body.addEventListener('keydown', e => {
       if (e.keyCode === 13 && e.shiftKey) {
-        addTest();
+        addTestOrFocusLastTestIfEmpty();
         e.preventDefault();
         return false;
       }
@@ -267,7 +264,6 @@
   }
 
   addListeners();
-  showSetup();
   addTest();
   monitorTests();
 }());
