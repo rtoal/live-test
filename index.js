@@ -11,9 +11,11 @@
   const setupArea = addTextArea(beforeContainer, hideSetup);
   const coverageWorker = new Worker('coverageworker.js');
   let localStorageName = '';
+  let lastFocusedTest = undefined;
 
-  // Creates a div with a text area, a button, and a reporting line;
-  // returns the textarea. Supply a callback for the button.
+  // Creates a div with a text area, a button, and error and reporting lines;
+  // returns the textarea. Supply a callback for the button, which is also
+  // fired on Shift+Delete.
   function addTextArea(container, callback) {
     let div = document.createElement("div");
     let textArea = document.createElement("textarea");
@@ -36,13 +38,14 @@
         return false;
       }
     });
+    textArea.addEventListener('focus', e => { lastFocusedTest = textArea; });
     container.appendChild(div);
     return textArea;
   }
 
   // Adds a new text area for tests. Shift+Enter also creates a new one.
   function addTest() {
-    let textArea = addTextArea($("#testwrapper"), div => div.remove());
+    let textArea = addTextArea($("#testwrapper"), div => deleteTest(div));
     textArea.setAttribute('placeholder', 'Write a test, like chai.assert.equal(2+2, 4)');
     textArea.addEventListener('input', () => {sizeBox(textArea); evalTest(textArea);});
     textArea.addEventListener('input', debouncedCoverage);
@@ -62,6 +65,15 @@
     });
     textArea.pendingCalls = 0;
     return textArea;
+  }
+
+  // When deleting a text, make sure the focus goes to the test just before it.
+  function deleteTest(div) {
+    lastFocusedTest = div.previousSibling ? div.previousSibling.firstChild : undefined;
+    if (lastFocusedTest) {
+      lastFocusedTest.focus();
+    }
+    div.remove();
   }
 
   function sizeBox(box) {
@@ -206,7 +218,6 @@
         test.style.background = 'red';
         test.worker.terminate();
         test.nextSibling.nextSibling.innerHTML = 'Test is too slow, so I killed it';
-        console.log(`Probably dead ${test.pendingCalls}`);
       }
     });
     setTimeout(monitorTests, 3000);
@@ -242,7 +253,11 @@
         return false;
       }
       if (e.keyCode === 13 && e.ctrlKey) {
-        editor.focus();
+        if (!editor.isFocused()) {
+          editor.focus();
+        } else if (lastFocusedTest) {
+          lastFocusedTest.focus();
+        }
         e.preventDefault();
         return false;
       }
