@@ -18,6 +18,7 @@
   // fired on Shift+Delete.
   function addTextArea(container, callback) {
     let div = document.createElement("div");
+    div.className = "cell";
     let textArea = document.createElement("textarea");
     let errorDiv = document.createElement("div");
     let reportDiv = document.createElement("div");
@@ -27,14 +28,21 @@
     if (callback) {
       let closer = document.createElement("span");
       closer.className = "deletebutton";
-      closer.innerHTML = "&#x2296;"; // Can also try "&#x1f5d1;";
-      closer.addEventListener('click', () => callback(div));
+      closer.innerHTML = "X"; // Can also try "&#x1f5d1;";
+      closer.addEventListener('click', () => {callback(div);console.log('hi')});
+      closer.style.display = 'none';
       textArea.addEventListener('keydown', e => {
         if (e.keyCode === 8 && e.shiftKey) {
           callback(div);
           e.preventDefault();
           return false;
         }
+      });
+      div.addEventListener('mouseenter', e => {
+        closer.style.display = 'inline';
+      });
+      div.addEventListener('mouseleave', e => {
+        closer.style.display = 'none';
       });
       div.appendChild(closer);
     }

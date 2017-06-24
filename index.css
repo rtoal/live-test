@@ -83,18 +83,6 @@ h1 {
   text-decoration: underline;
 }
 
-.deletebutton {
-  color: #777;
-  font-size: 130%;
-  user-select: none;
-  cursor: pointer;
-}
-
-.deletebutton:hover {
-  color: black;
-  font-weight: bold;
-}
-
 .tests {
   background-image: url('tddhat.png');
   background-position: bottom right;
@@ -109,24 +97,45 @@ h1 {
   width: 100%;
 }
 
+div.cell {
+  position: relative;
+}
+
 .tests textarea {
   display: inline-block;
   overflow: hidden;
-  width: calc(100% - 20px);
+  width: 100%;
   resize: none;
   border: 1px solid #bbb;
   border-left: 8px solid rgb(209,70,78);
   margin: 0 0 2px 0;
   padding: 2px;
   box-sizing: border-box;
+  position: relative;
 }
 
-.tests textarea+span {
+.deletebutton {
   display: block;
+  width: 20px;
+  height: 20px;
+  background-color: pink;
+  color: white;
   float: right;
-  text-align: right;
-  font-size: 18px;
+  text-align: center;
+  font-size: 20px;
+  border-radius: 50%;
+  position: absolute;
+  top: -5px;
+  right: -2px;
+  user-select: none;
+  cursor: pointer;
 }
+
+.deletebutton:hover {
+  background-color: red;
+  font-weight: bold;
+}
+
 
 .tests #testwrapper .testoutput, .tests #testwrapper .testerror {
   margin: 0;
