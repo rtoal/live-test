@@ -28,8 +28,8 @@
     if (callback) {
       let closer = document.createElement("span");
       closer.className = "deletebutton";
-      closer.innerHTML = "X"; // Can also try "&#x1f5d1;";
-      closer.addEventListener('click', () => {callback(div);console.log('hi')});
+      closer.innerHTML = "&#x1f5d1;";
+      closer.addEventListener('click', () => { callback(div); });
       closer.style.display = 'none';
       textArea.addEventListener('keydown', e => {
         if (e.keyCode === 8 && e.shiftKey) {
@@ -56,7 +56,7 @@
   // Adds a new text area for tests. Shift+Enter also creates a new one.
   function addTest() {
     let textArea = addTextArea($("#testwrapper"), div => deleteTest(div));
-    textArea.setAttribute('placeholder', 'Write a test, like chai.assert.equal(2+2, 4)');
+    textArea.setAttribute('placeholder', 'Write a test, like eq(2+2, 4)');
     textArea.addEventListener('input', () => {sizeBox(textArea); evalTest(textArea);});
     textArea.addEventListener('input', debouncedCoverage);
     textArea.focus();

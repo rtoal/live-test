@@ -118,21 +118,18 @@ div.cell {
   display: block;
   width: 20px;
   height: 20px;
-  background-color: pink;
-  color: white;
-  float: right;
   text-align: center;
-  font-size: 20px;
-  border-radius: 50%;
+  font-size: 18px;
+  border-radius: 0;
   position: absolute;
-  top: -5px;
-  right: -2px;
+  top: 1px;
+  right: 1px;
   user-select: none;
   cursor: pointer;
 }
 
 .deletebutton:hover {
-  background-color: red;
+  background-color: pink;
   font-weight: bold;
 }
 
